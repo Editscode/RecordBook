@@ -9,7 +9,7 @@
       public $id;
       public $firstname;
       public $lastname;
-      public $dob
+      public $dob;
       public $email;
       public $password;
 
@@ -26,6 +26,7 @@
                   SET
                       firstname = :firstname,
                       lastname = :lastname,
+                      dob = :dob,
                       email = :email,
                       password = :password";
 
@@ -35,12 +36,14 @@
           // sanitize
           $this->firstname=htmlspecialchars(strip_tags($this->firstname));
           $this->lastname=htmlspecialchars(strip_tags($this->lastname));
+          $this->dob=htmlspecialchars(strip_tags($this->dob));
           $this->email=htmlspecialchars(strip_tags($this->email));
           $this->password=htmlspecialchars(strip_tags($this->password));
 
           // bind the values
           $stmt->bindParam(':firstname', $this->firstname);
           $stmt->bindParam(':lastname', $this->lastname);
+          $stmt->bindParam(':dob', $this->dob);
           $stmt->bindParam(':email', $this->email);
 
           // hash the password before saving to database
@@ -91,6 +94,7 @@ function emailExists(){
         $this->id = $row['id'];
         $this->firstname = $row['firstname'];
         $this->lastname = $row['lastname'];
+        $this->dob = $row['dob'];
         $this->password = $row['password'];
 
         // return true because email exists in the database
@@ -113,6 +117,7 @@ public function update(){
             SET
                 firstname = :firstname,
                 lastname = :lastname,
+                dob = :dob,
                 email = :email
                 {$password_set}
             WHERE id = :id";
@@ -123,11 +128,13 @@ public function update(){
     // sanitize
     $this->firstname=htmlspecialchars(strip_tags($this->firstname));
     $this->lastname=htmlspecialchars(strip_tags($this->lastname));
+    $this->dob=htmlspecialchars(strip_tags($this->dob));
     $this->email=htmlspecialchars(strip_tags($this->email));
 
     // bind the values from the form
     $stmt->bindParam(':firstname', $this->firstname);
     $stmt->bindParam(':lastname', $this->lastname);
+    $stmt->bindParam(':dob', $this->dob);
     $stmt->bindParam(':email', $this->email);
 
     // hash the password before saving to database
